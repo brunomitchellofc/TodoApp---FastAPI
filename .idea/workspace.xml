@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="660b6d0a-826f-45a3-8ee5-815c99f61c7d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/fastapi.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/TodoApp/test/__init__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/TodoApp/test/test_examplo.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/TodoApp/test/test_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TodoApp/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/TodoApp/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TodoApp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/TodoApp/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TodoApp/routers/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/TodoApp/routers/admin.py" afterDir="false" />
@@ -117,7 +113,7 @@
       <workItem from="1771488147831" duration="24227000" />
       <workItem from="1771832887669" duration="2190000" />
       <workItem from="1773168573277" duration="1339000" />
-      <workItem from="1773169983182" duration="4761000" />
+      <workItem from="1773169983182" duration="5443000" />
     </task>
     <servers />
   </component>
