@@ -1,16 +1,17 @@
 from typing import Annotated
-
+from pydantic import BaseModel, Field
 from starlette import status
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException
 from ..models import Todos, Users
 from ..database import SessionLocal
-from .auth import get_current_user, bcrypt_context
-from pydantic import BaseModel, Field
+from .auth import get_current_user
+from passlib.context import CryptContext
+
 
 router = APIRouter(
     prefix='/user',
-    tags=['user'],
+    tags=['user']
 )
 
 def get_db():
@@ -20,26 +21,24 @@ def get_db():
     finally:
         db.close()
 
+
+db_dependency = Annotated[Session, Depends(get_db)]
+user_dependency = Annotated[dict, Depends(get_current_user)]
+bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
+
 class UserVerification(BaseModel):
     password: str
     new_password: str = Field(min_length=6)
 
-
-db_dependency = Annotated[Session, Depends(get_db)]
-user_dependency = Annotated[dict, Depends(get_current_user)]
-
 @router.get("/", status_code=status.HTTP_200_OK)
-async def get_users(user: user_dependency, db: db_dependency):
+async def get_user(user: user_dependency, db: db_dependency):
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
-    user_model = db.query(Users).filter(Users.id == user.get('id')).first()
+    return db.query(Users).filter(Users.id == user.get('id')).first()
 
-    if user_model is None:
-        raise HTTPException(status_code=404, detail='User Not Found')
 
-    return user_model
 
-@router.put("/password", status_code=status.HTTP_200_OK)
+@router.put("/password", status_code=status.HTTP_204_NO_CONTENT)
 async def change_password(user: user_dependency, db: db_dependency, user_verification: UserVerification):
     if user is None:
         raise HTTPException(status_code=401, detail='Authentification Failed')
