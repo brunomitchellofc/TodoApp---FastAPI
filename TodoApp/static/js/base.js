@@ -247,49 +247,52 @@ function logout() {
 }
 
 
-(function(){
+// DODO MASCOT 
+window.addEventListener('load', function(){
   const canvas = document.getElementById('dodo-face');
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
   const wrap = document.getElementById('dodo-wrap');
-  const anim = document.getElementById('dodo-anim');
   const bubble = document.getElementById('dodo-bubble');
   const W=90, CX=45, CY=45, R=38;
  
   function lerp(a,b,t){ return a+(b-a)*t; }
  
   const messages = [
-    ["Dodo is sad... 😢", "Nothing done yet.", "Come on, just one!", "Zero. Dodo weeps."],
-    ["Getting there!", "Dodo believes in you.", "Keep it up! 💪", "Good start!"],
-    ["Halfway! Nice. 😊", "Dodo is pleased!", "Half done, half to go.", "Looking good!"],
-    ["Almost!! 🌟", "So close!!", "Nearly there!! 🔥", "Don't stop now!!"],
-    ["100%!! 🎊", "PERFECT!!", "ALL DONE!! 🏆", "DODO LOVES YOU!! 💛"]
-];
-  
-  const bgColors = ['#fff5f5','#fff9f0','#f0fdf9','#fffbf0','#edfdf6'];
+    ["Nothing done yet...","Dodo is sad 😢","Come on, just one!","Zero. Dodo weeps."],
+    ["Getting there!","Dodo believes in you 💪","Keep it up!","Good start!"],
+    ["Halfway! Nice 😊","Dodo is pleased!","Half done, half to go.","Looking good!"],
+    ["Almost!! 🌟","So close!!","Nearly there!! 🔥","Don't stop now!!"],
+    ["100%!! 🎊","PERFECT!!","ALL DONE!! 🏆","DODO LOVES YOU!! 💛"]
+  ];
+ 
+  const bgColors = [
+    'linear-gradient(135deg,#ffe5e5,#fff3e0)',
+    'linear-gradient(135deg,#fff3e0,#fffde7)',
+    'linear-gradient(135deg,#f3e5ff,#fff3e0)',
+    'linear-gradient(135deg,#e8f5e9,#f3e5ff)',
+    'linear-gradient(135deg,#e8f5e9,#e3f2fd)'
+  ];
  
   function drawFace(t){
     ctx.clearRect(0,0,W,W);
-    const headColors = [[255,180,180],[255,220,120],[255,210,63],[255,210,63],[6,214,160]];
-    const idx = Math.min(3, Math.floor(t*4));
-    const frac = (t*4)-idx;
-    const c1 = headColors[Math.min(idx,4)];
-    const c2 = headColors[Math.min(idx+1,4)];
+    const headColors=[[255,180,180],[255,220,120],[255,210,63],[255,210,63],[6,214,160]];
+    const idx=Math.min(3,Math.floor(t*4));
+    const frac=(t*4)-idx;
+    const c1=headColors[Math.min(idx,4)];
+    const c2=headColors[Math.min(idx+1,4)];
     const r=Math.round(lerp(c1[0],c2[0],frac));
     const g=Math.round(lerp(c1[1],c2[1],frac));
     const b=Math.round(lerp(c1[2],c2[2],frac));
  
-    // shadow
     ctx.beginPath(); ctx.arc(CX+2,CY+3,R,0,Math.PI*2);
     ctx.fillStyle='rgba(0,0,0,0.07)'; ctx.fill();
  
-    // head
     ctx.beginPath(); ctx.arc(CX,CY,R,0,Math.PI*2);
     ctx.fillStyle=`rgb(${r},${g},${b})`; ctx.fill();
     ctx.strokeStyle='rgba(0,0,0,0.1)'; ctx.lineWidth=1.5; ctx.stroke();
  
-    // blush
-    const blush = Math.max(0,(t-0.4)*1.5);
+    const blush=Math.max(0,(t-0.4)*1.5);
     if(blush>0){
       ctx.beginPath(); ctx.ellipse(CX-18,CY+9,8,5,0,0,Math.PI*2);
       ctx.fillStyle=`rgba(255,120,120,${blush*0.4})`; ctx.fill();
@@ -297,16 +300,14 @@ function logout() {
       ctx.fill();
     }
  
-    // eyebrows
-    const eyeY = CY-7;
-    const browAngle = lerp(0.3,-0.25,t);
-    const browY = lerp(eyeY-11,eyeY-13,t);
+    const eyeY=CY-7;
+    const browAngle=lerp(0.3,-0.25,t);
+    const browY=lerp(eyeY-11,eyeY-13,t);
     ctx.strokeStyle='#1a1814'; ctx.lineWidth=2; ctx.lineCap='round';
     ctx.beginPath(); ctx.moveTo(CX-17,browY+(browAngle*6)); ctx.lineTo(CX-8,browY-(browAngle*6)); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(CX+8,browY-(browAngle*6)); ctx.lineTo(CX+17,browY+(browAngle*6)); ctx.stroke();
  
-    // eyes
-    const eyeH = lerp(4,2.8,Math.max(0,(t-0.6)/0.4));
+    const eyeH=lerp(4,2.8,Math.max(0,(t-0.6)/0.4));
     ctx.fillStyle='#1a1814';
     ctx.beginPath(); ctx.ellipse(CX-12,eyeY,4,eyeH,0,0,Math.PI*2); ctx.fill();
     ctx.beginPath(); ctx.ellipse(CX+12,eyeY,4,eyeH,0,0,Math.PI*2); ctx.fill();
@@ -314,7 +315,6 @@ function logout() {
     ctx.beginPath(); ctx.arc(CX-11,eyeY-1.5,1.2,0,Math.PI*2); ctx.fill();
     ctx.beginPath(); ctx.arc(CX+13,eyeY-1.5,1.2,0,Math.PI*2); ctx.fill();
  
-    // tears
     if(t<0.25){
       const to=(0.25-t)/0.25;
       ctx.fillStyle=`rgba(100,180,255,${to})`;
@@ -322,7 +322,6 @@ function logout() {
       ctx.beginPath(); ctx.ellipse(CX+12,eyeY+8,2.5,4,0,0,Math.PI*2); ctx.fill();
     }
  
-    // mouth
     const mY=CY+15, mW=lerp(13,18,t), curve=lerp(-10,12,t);
     ctx.beginPath(); ctx.moveTo(CX-mW,mY);
     ctx.quadraticCurveTo(CX,mY+curve,CX+mW,mY);
@@ -336,7 +335,6 @@ function logout() {
       ctx.fillStyle='#1a1814'; ctx.fill();
     }
  
-    // stars
     if(t>0.85){
       const so=(t-0.85)/0.15;
       ctx.globalAlpha=so; ctx.font='11px serif';
@@ -346,7 +344,6 @@ function logout() {
     }
   }
  
-  // read pct from DOM
   const progFill = document.querySelector('.progress-fill');
   let pct = 0;
   if(progFill){
@@ -358,7 +355,7 @@ function logout() {
   const t = pct/100;
   drawFace(t);
  
-  const level = pct===100 ? 4 : Math.min(3,Math.floor(pct/25));
-  bubble.textContent = messages[level][Math.floor(Math.random()*4)];
-  wrap.style.background = bgColors[level];
-})();
+  const level = pct===100 ? 4 : Math.min(3, Math.floor(pct/25));
+  if(bubble) bubble.textContent = messages[level][Math.floor(Math.random()*4)];
+  if(wrap) wrap.style.background = bgColors[level];
+});
