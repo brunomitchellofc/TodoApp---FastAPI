@@ -8,12 +8,8 @@ from fastapi.responses import RedirectResponse
 
 app = FastAPI()
 
-# Caminho direto para a pasta static que está dentro de TodoApp
 current_dir = os.path.dirname(os.path.abspath(__file__))
 static_path = os.path.join(current_dir, "static")
-
-# Debug para o log do Render
-print(f"DEBUG: O servidor está procurando o CSS em: {static_path}")
 
 app.mount("/static", StaticFiles(directory=static_path), name="static")
 
