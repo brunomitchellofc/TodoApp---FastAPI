@@ -19,7 +19,7 @@ router = APIRouter(
 )
 
 # No Render, certifique-se de adicionar SECRET_KEY nas Environment Variables
-SECRET_KEY = os.environ.get('SECRET_KEY', 'chave_padrao_para_local') 
+SECRET_KEY = '20cc1a07fd0b35aebf87db23a77cfa360794a2b888bcf0f1ed446009f91f6e9a' 
 ALGORITHM = 'HS256'
 
 bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
